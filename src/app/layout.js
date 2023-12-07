@@ -18,6 +18,12 @@ export default function RootLayout({ children }) {
       <body className={poppins.className}>
         <Navigation />
         {children}
+        <footer className="w-full py-2 mt-5 text-center footer text-xl">
+          <h1>
+            2023 <span className="text-primary">Beautify</span> Todos os
+            direitos reservados.
+          </h1>
+        </footer>
       </body>
     </html>
   );
