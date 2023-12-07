@@ -3,7 +3,7 @@ import React from "react";
 const Landing = () => {
   return (
     <section className="flex flex-col gap-[75px]">
-      <div className="w-full px-32 mt-20">
+      <div className="w-full px-16 mt-20">
         <div className="flex items-center justify-between gap-5">
           <blockquote className="font-extrabold title">
             <h1>ESCOLHA ENTRE NOSSAS</h1>
