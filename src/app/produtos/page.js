@@ -1,7 +1,47 @@
-import React from "react";
+"use client";
+
+import React, { useState, useEffect } from "react";
 import Product from "@/components/Product";
 
 const ProductPage = () => {
+  const [produto, setProduto] = useState([]);
+  const [produtoMarca, setProdutoMarca] = useState([]);
+  const [error, setError] = useState("");
+
+  const API_URL = "http://localhost:6969";
+
+  useEffect(() => {
+    async function getProducts() {
+      const response = await fetch(`${API_URL}/produto`, {
+        method: "GET",
+        headers: { "Content-type": "application/json" },
+      });
+
+      if (response.ok) {
+        const produtos = await response.json();
+        console.log(produtos);
+        setProduto(produtos);
+      } else {
+        setError("Erro ao criar produto!");
+      }
+    }
+    async function getProductsByBrand(brand) {
+      const response = await fetch(`${API_URL}/produto/marca${brand}`, {
+        method: "GET",
+        headers: { "Content-type": "application/json" },
+      });
+
+      if (response.ok) {
+        const produtos = await response.json();
+        setProdutoMarca(produtos);
+      } else {
+        setError("Erro ao criar produto!");
+      }
+    }
+    getProducts();
+    getProductsByBrand("Lendas");
+  }, []);
+
   return (
     <section className="flex flex-col text-center">
       <div className="w-full px-16 mt-20">
@@ -19,30 +59,16 @@ const ProductPage = () => {
         </div>
       </div>
       <div className="products">
-        <Product
-          name={"Creme hidratante"}
-          brand={"Beautify"}
-          price={109.9}
-          imageUrl={"/produto.png"}
-        />
-        <Product
-          name={"Creme hidratante"}
-          brand={"Beautify"}
-          price={109.9}
-          imageUrl={"/produto.png"}
-        />
-        <Product
-          name={"Creme hidratante"}
-          brand={"Beautify"}
-          price={109.9}
-          imageUrl={"/produto.png"}
-        />
-        <Product
-          name={"Creme hidratante"}
-          brand={"Beautify"}
-          price={109.9}
-          imageUrl={"/produto.png"}
-        />
+        {produtoMarca.map((p) => (
+          <Product
+            key={p._id}
+            name={p.name}
+            price={p.price}
+            imageUrl={p.imageUrl}
+            id={p._id}
+            brand={p.brand}
+          />
+        ))}
       </div>
       <div className="mt-20 px-16">
         <h1 className="title font-extrabold">
@@ -54,30 +80,16 @@ const ProductPage = () => {
         </p>
       </div>
       <div className="products">
-        <Product
-          name={"Creme hidratante"}
-          brand={"Beautify"}
-          price={109.9}
-          imageUrl={"/produto.png"}
-        />
-        <Product
-          name={"Creme hidratante"}
-          brand={"Beautify"}
-          price={109.9}
-          imageUrl={"/produto.png"}
-        />
-        <Product
-          name={"Creme hidratante"}
-          brand={"Beautify"}
-          price={109.9}
-          imageUrl={"/produto.png"}
-        />
-        <Product
-          name={"Creme hidratante"}
-          brand={"Beautify"}
-          price={109.9}
-          imageUrl={"/produto.png"}
-        />
+        {produto.map((p) => (
+          <Product
+            key={p._id}
+            name={p.name}
+            price={p.price}
+            imageUrl={p.imageUrl}
+            id={p._id}
+            brand={p.brand}
+          />
+        ))}
       </div>
     </section>
   );

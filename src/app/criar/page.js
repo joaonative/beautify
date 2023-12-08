@@ -11,21 +11,23 @@ const createPage = () => {
   const [name, setName] = useState("");
   const [price, setPrice] = useState("");
   const [brand, setBrand] = useState("");
+  const [imageUrl, setImageUrl] = useState("");
 
-  const API_URL = "http://localhost:8080";
+  const API_URL = "http://localhost:6969";
 
   async function handleSubmit(e) {
     e.preventDefault();
 
     const response = await fetch(`${API_URL}/produto`, {
       method: "POST",
-      body: JSON.stringify({ name, brand, price }),
+      body: JSON.stringify({ name, brand, price, imageUrl }),
       headers: { "Content-type": "application/json" },
     });
 
     if (response.ok) {
       router.push("/produtos");
     } else {
+      setError("Erro ao criar produto!");
     }
   }
 
@@ -35,8 +37,9 @@ const createPage = () => {
         <h1>
           CRIE SEU <span className="text-primary">PRODUTO</span>
         </h1>
+        {error && <h2>{error}</h2>}
       </blockquote>
-      <form className="lock max-w-xl mx-auto">
+      <form className="lock max-w-xl mx-auto" onSubmit={handleSubmit}>
         <input
           name="name"
           type="text"
@@ -58,6 +61,16 @@ const createPage = () => {
           value={price}
           onChange={(event) => setPrice(event.target.value)}
         />
+        <input
+          name="img"
+          type="text"
+          placeholder="Url da imagem:"
+          value={imageUrl}
+          onChange={(event) => setImageUrl(event.target.value)}
+        />
+        <button type="submit" className="primary">
+          CRIAR PRODUTO
+        </button>
       </form>
     </section>
   );

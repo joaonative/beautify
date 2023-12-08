@@ -16,8 +16,9 @@ const Product = ({ name, price, imageUrl, brand, id }) => {
       <h1>
         {name} - <span>{brand}</span>
       </h1>
+      <h1>{id}</h1>
       <span> R$ {price}</span>
-      <Link href={`/produtos/${id}`}>
+      <Link href="/[id]" as={`/${id}`}>
         <button className="primary">VER MAIS</button>
       </Link>
     </div>
